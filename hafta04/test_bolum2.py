@@ -12,15 +12,21 @@ from bolum2 import sifre_gucu, otopark_ucreti, yuzde_degisim
 def test_kisa_sifre_zayif():
     assert sifre_gucu("abc") == "zayıf"
 
+def test_kisa_sifre_zayiforta():
+    assert sifre_gucu("abcd") == "zayıf"
+
 def test_sifre_bos():
     with pytest.raises(ValueError):
         sifre_gucu("")
 
 def test_sifre_orta():
-    assert sifre_gucu("abcabcabc")
+    assert sifre_gucu("abcabcab") == "orta"
+
+def test_sifre_ortaguclu():
+    assert sifre_gucu("abcabcabc") == "orta"
 
 def test_sifre_guclu():
-    assert sifre_gucu("abcabcabcabcabc") == "güçlü"
+    assert sifre_gucu("abcabcabcabc") == "güçlü"
 
 # Otopark ücreti testleri
 
@@ -39,13 +45,16 @@ def test_otopark_ucreti_60denkucuk():
 
 def test_otopark_ucreti_180denkucuk():
     assert otopark_ucreti(180) == 40
-    assert otopark_ucreti(126) == 60
+    assert otopark_ucreti(126) == 40
 
 def test_otopark_ucreti_180denbuyuk():
     assert otopark_ucreti(192) == 60
 
 # Yüzde değişim testleri
 
-def test_yüzde_eski_deger_0_olamaz():
+def test_yuzde_degisim_eski_deger():
     with pytest.raises(ValueError):
-        yuzde_degisim(0,15)
+        yuzde_degisim(0, 15)
+
+def test_yuzde_normal_deger():
+    assert yuzde_degisim(100,150) == 50
